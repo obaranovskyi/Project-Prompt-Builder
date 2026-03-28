@@ -307,6 +307,7 @@ function renderPhaseSections(pt) {
     section.innerHTML = `
       <div class="phase-header" data-phase="${phase.id}">
         <span class="phase-name">${phase.name}</span>
+        <span class="phase-sep"></span>
         <span class="phase-badge ${phaseRef.required ? 'required' : 'optional'}">
           ${phaseRef.required ? 'required' : 'optional'}
         </span>
@@ -368,7 +369,16 @@ function buildFieldGroup(phaseId, q) {
   const label = document.createElement('label');
   label.className = 'field-label';
   label.textContent = q.prompt;
-  fg.appendChild(label);
+
+  const badgeParts = q.id.split('_');
+  const badgeName = badgeParts.slice(0, 2).join(' ').toUpperCase();
+  const fieldHeader = document.createElement('div');
+  fieldHeader.className = 'field-header';
+  fieldHeader.innerHTML = `
+    <span class="field-badge">${badgeName}</span>
+    <span class="field-prompt">${q.prompt}</span>
+  `;
+  fg.appendChild(fieldHeader);
 
   if (q.type === 'text') {
     const input = document.createElement('input');
@@ -434,8 +444,6 @@ function buildFieldGroup(phaseId, q) {
     });
     wrap.appendChild(toggleLabel);
     wrap.appendChild(textLabel);
-    fg.innerHTML = '';
-    fg.appendChild(label);
     fg.appendChild(wrap);
 
   } else if (q.type === 'multiselect') {
