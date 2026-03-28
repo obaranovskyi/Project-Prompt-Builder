@@ -1,5 +1,7 @@
 # Project-Prompt-Builder
 
+**Live:** https://obaranovskyi.github.io/Project-Prompt-Builder/
+
 A web-based tool for generating structured, detailed prompts for AI coding tools such as Cursor, Lovable, Bolt.new, and v0.dev.
 
 Select your project type, language, framework, and target tool, then work through guided phases covering requirements, tech stack, design, database, authentication, integrations, infrastructure, and constraints. The builder assembles everything into a ready-to-paste prompt tailored to your chosen AI tool's expected format and depth.
