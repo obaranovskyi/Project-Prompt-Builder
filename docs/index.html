@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Prompt Builder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <h1 class="brand-title">Project Prompt Builder</h1>
+      </div>
+      <nav class="tab-bar" role="tablist">
+        <button class="tab active" data-tab="builder" role="tab" aria-selected="true">Prompt Builder</button>
+        <button class="tab" data-tab="browse" role="tab" aria-selected="false">Browse Prompts</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Main ─────────────────────────────────────────────────────────────── -->
+  <main class="app-main">
+
+    <!-- ── Prompt Builder Tab ─────────────────────────────────────────────── -->
+    <div id="tab-builder" class="tab-panel active">
+
+      <!-- Sidebar: project type picker -->
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <p class="sidebar-label">Project Type</p>
+          <div id="project-type-list" class="project-type-list"></div>
+        </div>
+      </aside>
+
+      <!-- Content: form + prompt -->
+      <div class="content-area">
+
+        <!-- Top bar: subtype + tech + target tool -->
+        <div class="top-bar card">
+          <div class="top-bar-row">
+            <div class="field-group" id="fg-subtype">
+              <label class="field-label">Subtype</label>
+              <div class="custom-select-wrap">
+                <select id="sel-subtype" class="custom-select">
+                  <option value="">— select subtype —</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="fg-language">
+              <label class="field-label">Language</label>
+              <div class="custom-select-wrap">
+                <select id="sel-language" class="custom-select">
+                  <option value="">— select language —</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group" id="fg-framework">
+              <label class="field-label">Framework / Library</label>
+              <div class="custom-select-wrap">
+                <select id="sel-framework" class="custom-select" disabled>
+                  <option value="">— pick language first —</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Target AI Tool</label>
+              <div class="custom-select-wrap">
+                <select id="sel-target-tool" class="custom-select">
+                  <option value="">— select tool —</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="tool-note" class="tool-note" style="display:none;"></div>
+        </div>
+
+        <!-- Tech Ecosystem: related libraries per framework -->
+        <div id="tech-ecosystem" style="display:none;"></div>
+
+        <!-- Phase sections (dynamic) -->
+        <div class="phase-sections-toolbar" id="phase-toolbar" style="display:none;">
+          <button class="btn btn-danger-ghost btn-xs" id="btn-reset">Reset</button>
+          <button class="btn btn-ghost btn-xs" id="btn-toggle-all">Expand All</button>
+        </div>
+        <div id="phase-sections" class="phase-sections"></div>
+
+        <!-- Generated Prompt -->
+        <div class="card generated-prompt-card" id="prompt-card">
+          <div class="prompt-card-header">
+            <h2 class="section-title">Generated Prompt</h2>
+            <div class="prompt-actions">
+              <div class="copy-split">
+                <button class="btn btn-ghost" id="btn-copy-md" title="Copy as Markdown">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Copy Markdown
+                </button>
+                <button class="btn btn-ghost" id="btn-copy-txt" title="Copy as plain text">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="13" y1="18" x2="3" y2="18"/></svg>
+                  Copy Text
+                </button>
+              </div>
+              <button class="btn btn-ghost" id="btn-save" title="Save prompt">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
+                Save
+              </button>
+            </div>
+          </div>
+          <div id="prompt-empty" class="prompt-empty">
+            <p>Fill in the form above to generate your prompt.</p>
+            <p class="hint">Select a project type to get started.</p>
+          </div>
+          <pre id="prompt-output" class="prompt-output" style="display:none;"></pre>
+          <div id="copy-toast" class="toast" style="display:none;">Copied to clipboard!</div>
+        </div>
+
+      </div><!-- /content-area -->
+    </div><!-- /tab-builder -->
+
+    <!-- ── Browse Prompts Tab ──────────────────────────────────────────────── -->
+    <div id="tab-browse" class="tab-panel" style="display:none;">
+      <div class="browse-header">
+        <h2 class="section-title">Saved Prompts</h2>
+        <button class="btn btn-danger-ghost" id="btn-clear-all">Clear All</button>
+      </div>
+      <div id="saved-prompts-list" class="saved-prompts-list"></div>
+    </div>
+
+  </main>
+
+  <script src="blueprint.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
